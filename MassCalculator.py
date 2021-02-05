@@ -619,7 +619,10 @@ class MainWindow(QtWidgets.QMainWindow):
                             item.setTextAlignment(QtCore.Qt.AlignCenter)
                         else:
                             item = QtWidgets.QTableWidgetItem()
-                            item.setText(str(new_comp.calc_mass(round_by=self.mass_precision)))
+                            try:
+                                item.setText(str(new_comp.calc_mass(round_by=self.mass_precision)))
+                            except:
+                                item.setText('---')
                             item.setTextAlignment(QtCore.Qt.AlignRight)
 
                         item.setFlags(QtCore.Qt.ItemIsEnabled)
