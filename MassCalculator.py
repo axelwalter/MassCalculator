@@ -290,7 +290,6 @@ class MainWindow(QtWidgets.QMainWindow):
         column = item.column()
         row = item.row() +1
         row_count = self.t1.rowCount()
-        print(row, row_count)
 
         if row == row_count:
             self.t1.insertRow(row)
@@ -423,22 +422,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 for i in range(0, self.t1.rowCount()):
                     self.compounds_changed.append(i)
                 self.add_undo('Add Column')
-                for i in range(0, self.t1.rowCount()):
-                    j = self.t1.columnCount() - 1
-                    if self.t1.item(i,1).text() != '':
-                        try:
-                            new_comp = Compound(self.t1.item(i,1).text(),
-                                                charge = int(self.header_items[j].charge),
-                                                adduct = self.header_items[j].adduct).del_elements(self.header_items[j].delete).add_elements(self.header_items[j].add)
-                            item = QtWidgets.QTableWidgetItem()
-                            item.setText(str(new_comp.calc_mass(round_by=self.mass_precision)))
-                            item.setTextAlignment(QtCore.Qt.AlignRight)
-                        except:
-                            item = QtWidgets.QTableWidgetItem()
-                            item.setText('N/A')
-                            item.setTextAlignment(QtCore.Qt.AlignCenter)
-                        item.setReadOnly()
-                        self.t1.setItem(i,j,item)
+                
             except:
                 self.inputNewColumnCharge.setStyleSheet('border-radius:4px; color:#f04747; border:2px solid #FFFFFF')
 
@@ -492,7 +476,6 @@ class MainWindow(QtWidgets.QMainWindow):
         rows = self.t1.selectionModel().selectedRows()
         rows.sort()
         columns = self.t1.selectionModel().selectedColumns()
-        print(columns)
         columns.sort()
         for r in rows[::-1]:
             self.t1.removeRow(r.row())
@@ -574,8 +557,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.temp_cells = []
             self.add_undo('Paste')
             self.actionPaste.setDisabled(True)
-
-            print(self.compounds_changed)
         except:
             return
 
@@ -637,7 +618,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.compounds_changed = []
         self.progressBar.setValue(0)
         self.progressBar.hide()
-        print(time()-t0)
     
     #open window to set mass precision and update accordingly
     def get_mass_precision(self):
