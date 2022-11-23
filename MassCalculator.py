@@ -571,7 +571,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         for i in set(self.compounds_changed):
             
-            counter = (index/num_calcs)*100
+            counter = int((index/num_calcs)*100)
             index += 1
             
             error = False
